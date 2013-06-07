@@ -9,6 +9,30 @@ body, h1 {
   padding: 0;
 }
 
+h1 {
+	text-transform: uppercase;
+}
+
+body {
+	color: #333;
+}
+
+/* ==========================================
+/*
+/* COMMON
+/*
+/* ========================================== */
+
+.fix {
+	*zoom: 1;
+}
+
+.fix:after {
+	display: table;
+	clear: both;
+	content: '';
+}
+
 /* ==========================================
 /*
 /* HOME
@@ -19,6 +43,11 @@ body, h1 {
   width: 960px;
   margin: 0 auto;
   padding-top: 40px;
+  text-align: center;
+}
+
+.logo, #gameArea {
+	margin-bottom: 40px;
 }
 
 /* ==========================================
@@ -27,9 +56,10 @@ body, h1 {
 /*
 /* ========================================== */
 
-#gamearea {
-  margin: 10px 20px;
-  background: #efefef;
+#ws-area {
+  background: #fafafa;
+  display: inline-block;
+  padding: 20px;
   border-radius: 10px;
   position: relative;
 }

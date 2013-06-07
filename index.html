@@ -7,16 +7,17 @@
   </head>
   <body>
     <div class="wrap">
-      <h1>Word search game</h1>
-      <section id="gameArea"></section>
+      <h1 class="logo">Word search game</h1>
+      <section id="ws-area" class="fix"></section>
     </div>
+    <a href="https://github.com/lizhineng/word-search-game"><img style="position: absolute; top: 0; right: 0; border: 0;" src="images/forkme_right_red.png" alt="Fork me on GitHub"></a>
     <script src="js/utility.js"></script>
     <script src="js/wordsearch.js"></script>
     <script type="text/javascript">
-      var gameAreaEl = document.getElementById('gameArea');
+      var gameAreaEl = document.getElementById('ws-area');
       gameAreaEl.wordSeach({
         'gridSize': 10,
-        'words': ['apple']
+        'words': ['one', 'two', 'three', 'four', 'five']
       });
     </script>
   </body>
