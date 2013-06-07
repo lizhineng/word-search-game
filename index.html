@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Word search game</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Word search game</h1>
+      <section id="gameArea"></section>
+    </div>
+    <script src="js/utility.js"></script>
+    <script src="js/wordsearch.js"></script>
+    <script type="text/javascript">
+      var gameAreaEl = document.getElementById('gameArea');
+      gameAreaEl.wordSeach({
+        'gridSize': 10,
+        'words': ['apple']
+      });
+    </script>
+  </body>
+</html>
