@@ -52,14 +52,29 @@ body {
 
 /* ==========================================
 /*
-/* GAMEAREA
+/* Game area
 /*
 /* ========================================== */
 
-#ws-area {
+.ws-area {
   background: #fafafa;
   display: inline-block;
   padding: 20px;
   border-radius: 10px;
-  position: relative;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.ws-row {
+  line-height: 0;
+}
+
+.ws-col {
+  cursor: pointer;
+}
+
+.ws-selected {
+  background: #ddd;
 }

@@ -15,7 +15,20 @@
    */
   function WordSeach(wrapEl, settings) {
     this.wrapEl = wrapEl;
-    this.settings = settings;
+
+    // Add `#ws-area` to wrap element
+    this.wrapEl.className += ' ws-area';
+
+    // Default settings
+    var default_settings = {
+      'directions': ['WE', 'NS', 'SN', 'WN', 'EN'],
+      'gridSize': 10,
+      'words': ['one', 'two', 'three', 'four', 'five'],
+      'debug': false
+    }
+    this.settings = Object.merge(settings, default_settings);
+
+    this.isClicked = false;
 
     // Check the words' length if it is overflow the grid
     if (this.parseWords(this.settings.gridSize)) {
@@ -30,10 +43,15 @@
       }
 
       // Fill up the remaining blank items
-      this.fillUpFools();
+      if (!this.settings.debug) {
+        this.fillUpFools();
+      }
 
       // Draw the martrix into wrap element
       this.drawMartrix();
+
+      // Registe mouse events
+      this.registeMouseEvents();
     }
   }
 
@@ -46,7 +64,8 @@
         isWorked = true;
 
       while (keepGoing) {
-        var dir = Math.rangeInt(3), // Direction
+        // Getting random direction
+        var dir = this.settings.directions[Math.rangeInt(this.settings.directions.length - 1)],
           result = this.addWord(this.settings.words[counter], dir),
           isWorked = true;
 
@@ -66,69 +85,67 @@
 
   /**
    * Add word into the martrix
+   *
+   * @param {String} word
+   * @param {Number} direction
    */
   WordSeach.prototype.addWord = function(word, direction) {
-    var itWorked = true;
+    var itWorked = true,
+      directions = {
+        'WE': [0, 1], // Horizontal (From left to right)
+        'NS': [1, 0], // Vertical (From top to bottom)
+        'SN': [-1, 0], // Vertical (From bottom to top)
+        'WN': [1, 1], // From top left to bottom right
+        'EN': [1, -1] // From top right to bottom left
+      },
+      row, col; // y, x
 
     switch (direction) {
-      case 0: // Horizontal
-        // New row(y) and col(x)
+      case 'WE': // Horizontal (From left to right)
         var row = Math.rangeInt(this.settings.gridSize  - 1),
           col = Math.rangeInt(this.settings.gridSize - word.length);
-
-        for (var i = 0; i < word.length; i++) {
-          var origin = this.martrix[row][col + i].letter;
-          if (origin == '.' || origin == word[i]) {
-            this.martrix[row][col + i].letter = word[i];
-          } else {
-            itWorked = false;
-          }
-        }
         break;
 
-      case 1: // vertical
+      case 'NS': // Vertical (From top to bottom)
         var row = Math.rangeInt(this.settings.gridSize - word.length),
           col = Math.rangeInt(this.settings.gridSize  - 1);
-
-        for (var i = 0; i < word.length; i++) {
-          var origin = this.martrix[row + i][col].letter;
-          if (origin == '.' || origin == word[i]) {
-            this.martrix[row + i][col].letter = word[i];
-          } else {
-            itWorked = false;
-          }
-        }
         break;
 
-      case 2: // From top left to bottom right
+      case 'SN': // Vertical (From bottom to top)
+        var row = Math.rangeInt(word.length - 1, this.settings.gridSize - 1),
+          col = Math.rangeInt(this.settings.gridSize  - 1);
+        break;
+
+      case 'WN': // From top left to bottom right
         var row = Math.rangeInt(this.settings.gridSize - word.length),
           col = Math.rangeInt(this.settings.gridSize - word.length);
-        var col = Math.floor(Math.random() * (this.settings.gridSize - word.length + 1)),
-          row = Math.floor(Math.random() * (this.settings.gridSize - word.length + 1));
-
-        for (var i = 0; i < word.length; i++) {
-          var origin = this.martrix[row + i][col + i].letter;
-          if (origin == '.' || origin == word[i]) {
-            this.martrix[row + i][col + i].letter = word[i];
-          } else {
-            itWorked = false;
-          }
-        }
         break;
 
-      case 3: // From top right to bottom left
+      case 'EN': // From top right to bottom left
         var row = Math.rangeInt(this.settings.gridSize - word.length),
           col = Math.rangeInt(word.length - 1, this.settings.gridSize - 1);
-
-        for (var i = 0; i < word.length; i++) {
-          var origin = this.martrix[row + i][col - i].letter;
-          if (origin == '.' || origin == word[i]) {
-            this.martrix[row + i][col - i].letter = word[i];
-          } else {
-            itWorked = false;
-          }
-        }
         break;
+
+      default:
+        var error = 'UNKNOWN DIRECTION!';
+        alert(error);
+        console.log(error);
+        break;
+    }
+
+    // Add words to the martrix
+    for (var i = 0; i < word.length; i++) {
+      var newRow = row + i * directions[direction][0],
+        newCol = col + i * directions[direction][1];
+
+      // The letter on the board
+      var origin = this.martrix[newRow][newCol].letter;
+
+      if (origin == '.' || origin == word[i]) {
+        this.martrix[newRow][newCol].letter = word[i];
+      } else {
+        itWorked = false;
+      }
     }
 
     return itWorked;
@@ -139,7 +156,7 @@
    */
   WordSeach.prototype.initialize = function() {
     /**
-     * Store the words
+     * Letter martrix
      *
      * param {Array}
      */
@@ -154,8 +171,8 @@
     for (var i = 0; i < this.settings.words.length; i++) {
       // Convert all the letters to upper case
       this.settings.words[i] = this.settings.words[i].toUpperCase();
-      var word = this.settings.words[i];
 
+      var word = this.settings.words[i];
       if (word.length > maxSize) {
         alert('The length of word `' + word + '` is overflow the gridSize.');
         console.error('The length of word `' + word + '` is overflow the gridSize.');
@@ -192,11 +209,12 @@
     for (var row = 0; row < this.settings.gridSize; row++) {
       // New row
       var divEl = document.createElement('div');
+      divEl.setAttribute('class', 'ws-row');
       this.wrapEl.appendChild(divEl);
 
       for (var col = 0; col < this.settings.gridSize; col++) {
         var cvEl = document.createElement('canvas');
-        cvEl.setAttribute('class', 'ws-letter');
+        cvEl.setAttribute('class', 'ws-col');
         cvEl.setAttribute('width', 40);
         cvEl.setAttribute('height', 40);
 
@@ -216,14 +234,53 @@
   }
 
   /**
-   * Fill up the remaining blank items
+   * Fill up the remaining items
    */
   WordSeach.prototype.fillUpFools = function() {
     for (var row = 0; row < this.settings.gridSize; row++) {
       for (var col = 0; col < this.settings.gridSize; col++) {
         if (this.martrix[row][col].letter == '.') {
+          // Math.rangeInt(65, 90) => A ~ Z
           this.martrix[row][col].letter = String.fromCharCode(Math.rangeInt(65, 90));
         }
+      }
+    }
+  }
+
+  /*
+   * Registe mouse events
+   */
+  WordSeach.prototype.registeMouseEvents = function() {
+    var cols = document.querySelectorAll('.ws-col');
+    for (var i = 0; i < cols.length; i++) {
+      cols[i].addEventListener('mousedown', this.onMouseDownHandler(this));
+      cols[i].addEventListener('mouseup', this.onMouseUpHandler(this));
+      cols[i].addEventListener('mouseover', this.onMouseOverHandler(this));
+    }
+  }
+
+  WordSeach.prototype.onMouseDownHandler = function(ws) {
+    return function() {
+      ws.isClicked = true;
+      this.className += ' ws-selected';
+    }
+  }
+
+  WordSeach.prototype.onMouseUpHandler = function(ws) {
+    return function() {
+      ws.isClicked = false;
+
+      var selectedEls = document.querySelectorAll('.ws-selected');
+      for (var i = 0; i < selectedEls.length; i++) {
+        selectedEls[i].setAttribute('class', 'ws-col');
+      }
+    }
+  }
+
+  WordSeach.prototype.onMouseOverHandler = function(ws) {
+    return function() {
+      if (ws.isClicked) {
+        this.className += ' ws-selected';
       }
     }
   }

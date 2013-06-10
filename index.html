@@ -8,17 +8,14 @@
   <body>
     <div class="wrap">
       <h1 class="logo">Word search game</h1>
-      <section id="ws-area" class="fix"></section>
+      <section id="ws-area"></section>
     </div>
     <a href="https://github.com/lizhineng/word-search-game"><img style="position: absolute; top: 0; right: 0; border: 0;" src="images/forkme_right_red.png" alt="Fork me on GitHub"></a>
     <script src="js/utility.js"></script>
     <script src="js/wordsearch.js"></script>
     <script type="text/javascript">
       var gameAreaEl = document.getElementById('ws-area');
-      gameAreaEl.wordSeach({
-        'gridSize': 10,
-        'words': ['one', 'two', 'three', 'four', 'five']
-      });
+      gameAreaEl.wordSeach();
     </script>
   </body>
 </html>
