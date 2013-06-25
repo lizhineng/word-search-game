@@ -29,6 +29,10 @@
     this.settings = Object.merge(settings, default_settings);
 
     this.isClicked = false;
+    this.startRow = null;
+    this.startCol = null;
+    this.endRow = null;
+    this.endCol = null;
 
     // Check the words' length if it is overflow the grid
     if (this.parseWords(this.settings.gridSize)) {
@@ -217,6 +221,9 @@
         cvEl.setAttribute('class', 'ws-col');
         cvEl.setAttribute('width', 40);
         cvEl.setAttribute('height', 40);
+        cvEl.setAttribute('data-row', row);
+        cvEl.setAttribute('data-col', col);
+        cvEl.setAttribute('data-char', this.martrix[row][col].letter);
 
         // Fill text in middle center
         var x = cvEl.width / 2,
@@ -262,6 +269,8 @@
   WordSeach.prototype.onMouseDownHandler = function(ws) {
     return function() {
       ws.isClicked = true;
+      ws.startRow = this.getAttribute('data-row');
+      ws.startCol = this.getAttribute('data-col');
       this.className += ' ws-selected';
     }
   }
@@ -269,7 +278,6 @@
   WordSeach.prototype.onMouseUpHandler = function(ws) {
     return function() {
       ws.isClicked = false;
-
       var selectedEls = document.querySelectorAll('.ws-selected');
       for (var i = 0; i < selectedEls.length; i++) {
         selectedEls[i].setAttribute('class', 'ws-col');
@@ -280,8 +288,38 @@
   WordSeach.prototype.onMouseOverHandler = function(ws) {
     return function() {
       if (ws.isClicked) {
-        this.className += ' ws-selected';
+        ws.endRow = this.getAttribute('data-row');
+        ws.endCol = this.getAttribute('data-col');
+
+        ws.drawLine(ws.startRow, ws.startCol, ws.endRow, ws.endCol);
       }
+    }
+  }
+
+  WordSeach.prototype.drawLine = function(startRow, startCol, endRow, endCol) {
+    if (startRow == endRow || startCol == endCol) {
+      var selectedEls = document.querySelectorAll('.ws-selected');
+      for (var i = 0; i < selectedEls.length; i++) {
+        selectedEls[i].setAttribute('class', 'ws-col');
+      }
+
+      var rows = document.querySelectorAll('#ws-area div');
+      var y = (startRow == endRow) ? 0 : 1;
+      var x = (startCol == endCol) ? 0 : 1;
+      var counter = 0;
+      var newRol = null;
+      var newCol = null;
+
+      do {
+        var newRow = Number(startRow) + x * counter;
+        var newCol = Number(startCol) + y * counter;
+        console.log(newRow, newCol);
+        var row = rows[newRow].childNodes;
+        var col = row[newCol];
+        col.className += ' ws-selected';
+
+        counter++;
+      } while (newRow == endRow || newCol == endCol);
     }
   }
 

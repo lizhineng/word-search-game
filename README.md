@@ -1,11 +1,10 @@
 # Word search game
-
 A word game which programming with HTML5 and Javascript.
 
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2013 Zhineng Li <lizhineng@gmail.com> and other `word-search-game` contributors
+Copyright (c) 2013 Li Zhineng &lt;lizhineng@gmail.com&gt; and other `word-search-game` contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
