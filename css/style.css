@@ -1,8 +1,4 @@
-/* ==========================================
-/*
-/* CSS RESET
-/*
-/* ========================================== */
+/* CSS reset */
 
 body, h1 {
   margin: 0;
@@ -10,51 +6,39 @@ body, h1 {
 }
 
 h1 {
-	text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 body {
-	color: #333;
+  color: #333;
 }
 
-/* ==========================================
-/*
-/* COMMON
-/*
-/* ========================================== */
+/* Common */
 
 .fix {
-	*zoom: 1;
+  *zoom: 1;
 }
 
 .fix:after {
-	display: table;
-	clear: both;
-	content: '';
+  display: table;
+  clear: both;
+  content: '';
 }
 
-/* ==========================================
-/*
-/* HOME
-/*
-/* ========================================== */
+/* Home */
 
 .wrap {
   width: 960px;
   margin: 0 auto;
-  padding-top: 40px;
+  padding: 40px 0;
   text-align: center;
 }
 
 .logo, #gameArea {
-	margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
-/* ==========================================
-/*
-/* Game area
-/*
-/* ========================================== */
+/* Wordseach */
 
 .ws-area {
   background: #fafafa;
@@ -76,5 +60,5 @@ body {
 }
 
 .ws-selected {
-  background: #ddd;
+  background: #eee;
 }
