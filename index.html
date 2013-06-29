@@ -3,12 +3,14 @@
   <head>
     <meta charset="utf-8">
     <title>Word search game</title>
+    <link rel="stylesheet" href="css/wordseach.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <div class="wrap">
       <h1 class="logo">Word search game</h1>
       <section id="ws-area"></section>
+      <ul class="ws-words"></ul>
     </div>
     <a href="https://github.com/lizhineng/word-search-game"><img style="position: absolute; top: 0; right: 0; border: 0;" src="images/forkme_right_red.png" alt="Fork me on GitHub"></a>
     <script src="js/utility.js"></script>
@@ -16,7 +18,16 @@
     <script type="text/javascript">
       var gameAreaEl = document.getElementById('ws-area');
       var gameobj = gameAreaEl.wordSeach();
-      console.log(gameobj.words);
+
+      // Put words into `.ws-words`
+      var words = gameobj.settings.words,
+        wordsWrap = document.querySelector('.ws-words');
+      for (i in words) {
+        var liEl = document.createElement('li');
+        liEl.setAttribute('class', 'ws-word');
+        liEl.innerText = words[i];
+        wordsWrap.appendChild(liEl);
+      }
     </script>
   </body>
 </html>
