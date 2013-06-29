@@ -17,7 +17,7 @@
     this.wrapEl = wrapEl;
 
     // Add `.ws-area` to wrap element
-    this.wrapEl.className += ' ws-area';
+    this.wrapEl.classList.add('ws-area');
 
     // Default settings
     var default_settings = {
@@ -305,7 +305,31 @@
   WordSeach.prototype.clearHighlight = function() {
     var selectedEls = document.querySelectorAll('.ws-selected');
     for (var i = 0; i < selectedEls.length; i++) {
-      selectedEls[i].className = 'ws-col';
+      selectedEls[i].classList.remove('ws-selected');
+    }
+  }
+
+  /**
+   * Lookup if the wordlist contains the selected
+   * @param {Array} selected
+   */
+  WordSeach.prototype.lookup = function(selected) {
+    var words = [''];
+
+    for (var i = 0; i < selected.length; i++) {
+      words[0] += selected[i].letter;
+    }
+    words.push(words[0].split('').reverse().join(''));
+
+    if (this.settings.words.indexOf(words[0]) > -1 ||
+        this.settings.words.indexOf(words[1]) > -1) {
+      for (var i = 0; i < selected.length; i++) {
+        var row = selected[i].row + 1,
+          col = selected[i].col + 1,
+          el = document.querySelector('.ws-area .ws-row:nth-child(' + row + ') .ws-col:nth-child(' + col + ')');
+
+        el.classList.add('ws-found');
+      }
     }
   }
 
@@ -338,7 +362,7 @@
             col = current.col + 1,
             el = document.querySelector('.ws-area .ws-row:nth-child(' + row + ') .ws-col:nth-child(' + col + ')');
 
-          el.className = 'ws-col ws-selected';
+          el.className += ' ws-selected';
         }
       }
     }
@@ -352,6 +376,8 @@
     return function() {
       _this.selectFrom = null;
       _this.clearHighlight();
+      _this.lookup(_this.selected);
+      _this.selected = [];
     }
   }
 
