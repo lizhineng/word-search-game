@@ -1,6 +1,12 @@
 # Word search game
 A word game which programming with HTML5 and Javascript.
 
+##Requirment
+* Internet Explorer 10
+* Google Chrome 8
+* Opera 11.5
+* Safari 5
+
 ## License
 The MIT License (MIT)
 
