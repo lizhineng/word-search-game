@@ -26,3 +26,40 @@
 .ws-found {
   background: yellow;
 }
+
+.ws-game-over-outer {
+  background: rgba(0, 0, 0, 0.85);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.ws-game-over-inner {
+  width:100%;
+  height:100%;
+  padding:0;
+  margin:0;
+  display:table;
+}
+
+.ws-game-over {
+  display:table-cell;
+  vertical-align:middle;
+}
+
+.ws-game-over h2 {
+  color:#FFFFFF;
+  font-size:2em;
+  text-transform:uppercase;
+  padding:0;
+  margin:0 0 9px 0;
+}
+
+.ws-game-over p {
+  color:#FFFFFF;
+  font-size:1em;
+  padding:0;
+  margin:0;
+}

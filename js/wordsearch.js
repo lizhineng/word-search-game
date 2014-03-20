@@ -19,6 +19,9 @@
     // Add `.ws-area` to wrap element
     this.wrapEl.classList.add('ws-area');
 
+    //Words solved.
+    this.solved = 0;
+
     // Default settings
     var default_settings = {
       'directions': ['W', 'N', 'WN', 'EN'],
@@ -339,7 +342,35 @@
           wordListItems[i].innerHTML = "<del>"+wordListItems[i].innerHTML+"</del>";
         }
       }
+
+      //Increment solved words.
+      this.solved++;
+
+      //Game over?
+      if(this.solved == this.settings.words.length){
+        this.gameOver();
+      }
     }
+  }
+
+  /**
+   * Game Over
+   */
+  WordSearch.prototype.gameOver = function() {
+    //Create overlay.
+    var overlay = document.createElement("div");
+    overlay.setAttribute("id", "ws-game-over-outer");
+    overlay.setAttribute("class", "ws-game-over-outer");
+    this.wrapEl.parentNode.appendChild(overlay);
+
+    //Create overlay content.
+    var overlay = document.getElementById("ws-game-over-outer");
+      overlay.innerHTML = "<div class='ws-game-over-inner' id='ws-game-over-inner'>"+
+                            "<div class='ws-game-over' id='ws-game-over'>"+
+                              "<h2>Congratulations!</h2>"+
+                              "<p>You've found all of the words!</p>"+
+                            "</div>"+
+                          "</div>";
   }
 
   /**
