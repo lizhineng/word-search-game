@@ -330,6 +330,15 @@
 
         el.classList.add('ws-found');
       }
+
+      //Cross word off list.
+      var wordList = document.querySelector(".ws-words");
+      var wordListItems = wordList.getElementsByTagName("li");
+      for(var i=0; i<wordListItems.length; i++){
+        if(words[0].toLowerCase() == wordListItems[i].innerHTML.toLowerCase()){
+          wordListItems[i].innerHTML = "<del>"+wordListItems[i].innerHTML+"</del>";
+        }
+      }
     }
   }
 
