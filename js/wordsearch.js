@@ -2,8 +2,8 @@
   'use strict';
 
   // Extend the element method
-  Element.prototype.wordSeach = function(settings) {
-    return new WordSeach(this, settings);
+  Element.prototype.wordSearch = function(settings) {
+    return new WordSearch(this, settings);
   }
 
   /**
@@ -13,7 +13,7 @@
    * @param {Array} settings
    * constructor
    */
-  function WordSeach(wrapEl, settings) {
+  function WordSearch(wrapEl, settings) {
     this.wrapEl = wrapEl;
 
     // Add `.ws-area` to wrap element
@@ -55,7 +55,7 @@
    * @param {Number} Max size
    * @return {Boolean}
    */
-  WordSeach.prototype.parseWords = function(maxSize) {
+  WordSearch.prototype.parseWords = function(maxSize) {
     var itWorked = true;
 
     for (var i = 0; i < this.settings.words.length; i++) {
@@ -76,7 +76,7 @@
   /**
    * Put the words into the matrix
    */
-  WordSeach.prototype.addWords = function() {
+  WordSearch.prototype.addWords = function() {
       var keepGoing = true,
         counter = 0,
         isWorked = true;
@@ -107,7 +107,7 @@
    * @param {String} word
    * @param {Number} direction
    */
-  WordSeach.prototype.addWord = function(word, direction) {
+  WordSearch.prototype.addWord = function(word, direction) {
     var itWorked = true,
       directions = {
         'W': [0, 1], // Horizontal (From left to right)
@@ -166,7 +166,7 @@
   /**
    * Initialize the application
    */
-  WordSeach.prototype.initialize = function() {
+  WordSearch.prototype.initialize = function() {
     /**
      * Letter matrix
      *
@@ -192,7 +192,7 @@
    * Fill default items into the matrix
    * @param {Number} size Grid size
    */
-  WordSeach.prototype.initmatrix = function(size) {
+  WordSearch.prototype.initmatrix = function(size) {
     for (var row = 0; row < size; row++) {
       for (var col = 0; col < size; col++) {
         var item = {
@@ -213,7 +213,7 @@
   /**
    * Draw the matrix
    */
-  WordSeach.prototype.drawmatrix = function() {
+  WordSearch.prototype.drawmatrix = function() {
     for (var row = 0; row < this.settings.gridSize; row++) {
       // New row
       var divEl = document.createElement('div');
@@ -250,7 +250,7 @@
   /**
    * Fill up the remaining items
    */
-  WordSeach.prototype.fillUpFools = function() {
+  WordSearch.prototype.fillUpFools = function() {
     for (var row = 0; row < this.settings.gridSize; row++) {
       for (var col = 0; col < this.settings.gridSize; col++) {
         if (this.matrix[row][col].letter == '.') {
@@ -269,7 +269,7 @@
    * @param colTo
    * @return {Array}
    */
-  WordSeach.prototype.getItems = function(rowFrom, colFrom, rowTo, colTo) {
+  WordSearch.prototype.getItems = function(rowFrom, colFrom, rowTo, colTo) {
     var items = [];
 
     if ( rowFrom === rowTo || colFrom === colTo || Math.abs(rowTo - rowFrom) == Math.abs(colTo - colFrom) ) {
@@ -295,14 +295,14 @@
    * @param {Number} col
    * @return {*}
    */
-  WordSeach.prototype.getItem = function(row, col) {
+  WordSearch.prototype.getItem = function(row, col) {
     return (this.matrix[row] ? this.matrix[row][col] : undefined);
   }
 
   /**
    * Clear the exist highlights
    */
-  WordSeach.prototype.clearHighlight = function() {
+  WordSearch.prototype.clearHighlight = function() {
     var selectedEls = document.querySelectorAll('.ws-selected');
     for (var i = 0; i < selectedEls.length; i++) {
       selectedEls[i].classList.remove('ws-selected');
@@ -313,7 +313,7 @@
    * Lookup if the wordlist contains the selected
    * @param {Array} selected
    */
-  WordSeach.prototype.lookup = function(selected) {
+  WordSearch.prototype.lookup = function(selected) {
     var words = [''];
 
     for (var i = 0; i < selected.length; i++) {
@@ -337,7 +337,7 @@
    * Mouse event - Mouse down
    * @param {Object} item
    */
-  WordSeach.prototype.onMousedown = function(item) {
+  WordSearch.prototype.onMousedown = function(item) {
     var _this = this;
     return function() {
       _this.selectFrom = item;
@@ -348,7 +348,7 @@
    * Mouse event - Mouse move
    * @param {Object}
    */
-  WordSeach.prototype.onMouseover = function(item) {
+  WordSearch.prototype.onMouseover = function(item) {
     var _this = this;
     return function() {
       if (_this.selectFrom) {
@@ -371,7 +371,7 @@
   /**
    * Mouse event - Mouse up
    */
-  WordSeach.prototype.onMouseup = function() {
+  WordSearch.prototype.onMouseup = function() {
     var _this = this;
     return function() {
       _this.selectFrom = null;
