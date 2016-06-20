@@ -256,11 +256,12 @@
    * Fill up the remaining items
    */
   WordSearch.prototype.fillUpFools = function() {
+	var rangeLanguage = searchLanguage(this.settings.words[0].split('')[0]);
     for (var row = 0; row < this.settings.gridSize; row++) {
       for (var col = 0; col < this.settings.gridSize; col++) {
         if (this.matrix[row][col].letter == '.') {
           // Math.rangeInt(65, 90) => A ~ Z
-          this.matrix[row][col].letter = String.fromCharCode(Math.rangeInt(65, 90));
+          this.matrix[row][col].letter = String.fromCharCode(Math.rangeInt(rangeLanguage[0], rangeLanguage[1]));
         }
       }
     }
@@ -560,11 +561,32 @@ var defaultDiacriticsRemovalMap = [{
 }, {
     'base': "Z",
         'letters': /(&#90;|&#9423;|&#65338;|&#377;|&#7824;|&#379;|&#381;|&#7826;|&#7828;|&#437;|&#548;|&#11391;|&#11371;|&#42850;|[\u005A\u24CF\uFF3A\u0179\u1E90\u017B\u017D\u1E92\u1E94\u01B5\u0224\u2C7F\u2C6B\uA762])/g
-}];
+},	{
+	'base': "",	//Niqqud in Hebrew
+		'letters': /[\u0591-\u05C7]/g
+}]
 
 function removeDiacritics(str) {
     for (var i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
         str = str.replace(defaultDiacriticsRemovalMap[i].letters, defaultDiacriticsRemovalMap[i].base);
     }
     return str;
+}
+//------------------------------Search language--------------------------------------------------//
+// Determine what letters injected on grid
+function searchLanguage(firstLetter)
+{
+	codefirstLetter = firstLetter.charCodeAt();
+	console.log(codefirstLetter);
+	var codeLetter = [65,90];
+	if((codefirstLetter>=65) && (codefirstLetter<=90)) { // Latin
+		return codeLetter = [65,90];
+	}
+	if((codefirstLetter>=1488) && (codefirstLetter<=1514)) { //Hebrew א -> ת
+		return codeLetter = [1488,1514];
+	}
+	console.log("Letter not detected : "+firstLetter+":"+codefirstLetter);
+	return codeLetter;
+	
+	
 }
