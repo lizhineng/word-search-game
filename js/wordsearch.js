@@ -425,7 +425,7 @@
   }
 
 })();
-//-----------------------------Remove accent----------------------------------------------------//
+//-----------------------------Remove accent for latin/hebrew letters---------------------------------------------------//
 var defaultDiacriticsRemovalMap = [{
     'base': "A",
         'letters': /(&#65;|&#9398;|&#65313;|&#192;|&#193;|&#194;|&#7846;|&#7844;|&#7850;|&#7848;|&#195;|&#256;|&#258;|&#7856;|&#7854;|&#7860;|&#7858;|&#550;|&#480;|&#196;|&#478;|&#7842;|&#197;|&#506;|&#461;|&#512;|&#514;|&#7840;|&#7852;|&#7862;|&#7680;|&#260;|&#570;|&#11375;|[\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F])/g
@@ -584,6 +584,22 @@ function searchLanguage(firstLetter)
 	}
 	if((codefirstLetter>=1488) && (codefirstLetter<=1514)) { //Hebrew א -> ת
 		return codeLetter = [1488,1514];
+	}
+	if((codefirstLetter>=913) && (codefirstLetter<=937))	{ //Greek Α -> Ω
+		return codeLetter = [913,929]; //930 is blank
+	}
+	//----------No certain-----------------------------------------------------//
+	if((codefirstLetter>=1040) && (codefirstLetter<=1071))	{ //Cyrillic А -> Я
+		return codeLetter = [1040,1071]; //930 is blank
+	}
+	if((codefirstLetter>=1569) && (codefirstLetter<=1610))	{ //Arab
+		return codeLetter = [1569,1594]; //Between 1595 and 1600, no letter
+	}
+	if((codefirstLetter>=19969) && (codefirstLetter<=40891))	{ //Chinese
+		return codeLetter = [19969,40891];
+	}
+	if((codefirstLetter>=12354) && (codefirstLetter<=12436))	{ //Japan Hiragana
+		return codeLetter = [12388,12418]; //Only no small letter
 	}
 	console.log("Letter not detected : "+firstLetter+":"+codefirstLetter);
 	return codeLetter;
