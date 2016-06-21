@@ -64,7 +64,7 @@
 
     for (var i = 0; i < this.settings.words.length; i++) {
       // Convert all the letters to upper case      
-	  this.settings.wordsList[i] =  this.settings.words[i].charAt(0).toUpperCase() + this.settings.words[i].substring(1).toLowerCase();
+	  this.settings.wordsList[i] =  this.settings.words[i];
 	  this.settings.words[i] =  removeDiacritics(this.settings.wordsList[i].toUpperCase());
 
       var word = this.settings.words[i];
@@ -341,13 +341,16 @@
       var wordList = document.querySelector(".ws-words");
       var wordListItems = wordList.getElementsByTagName("li");
       for(var i=0; i<wordListItems.length; i++){
-        if(words[0].toLowerCase() == wordListItems[i].innerHTML.toLowerCase()){
-          wordListItems[i].innerHTML = "<del>"+wordListItems[i].innerHTML+"</del>";
+        if(words[0] == removeDiacritics(wordListItems[i].innerHTML.toUpperCase())){			
+          if(wordListItems[i].innerHTML != "<del>"+wordListItems[i].innerHTML+"</del>") { //Check the word is never found
+			wordListItems[i].innerHTML = "<del>"+wordListItems[i].innerHTML+"</del>";
+			//Increment solved words.
+			this.solved++;
+		  }
+		  
+	  
         }
       }
-
-      //Increment solved words.
-      this.solved++;
 
       //Game over?
       if(this.solved == this.settings.words.length){

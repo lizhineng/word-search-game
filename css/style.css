@@ -52,3 +52,7 @@ body {
 .ws-word {
   margin-bottom: 4px;
 }
+
+.ws-words ::first-letter{
+	text-transform : capitalize;
+}
