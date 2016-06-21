@@ -64,8 +64,8 @@
 
     for (var i = 0; i < this.settings.words.length; i++) {
       // Convert all the letters to upper case      
-	  this.settings.wordsList[i] =  this.settings.words[i];
-	  this.settings.words[i] =  removeDiacritics(this.settings.wordsList[i].toUpperCase());
+	  this.settings.wordsList[i] =  this.settings.words[i].trim();
+	  this.settings.words[i] =  removeDiacritics(this.settings.wordsList[i].trim().toUpperCase());
 
       var word = this.settings.words[i];
       if (word.length > maxSize) {
