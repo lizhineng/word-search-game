@@ -565,7 +565,7 @@ var defaultDiacriticsRemovalMap = [{
     'base': "Z",
         'letters': /(&#90;|&#9423;|&#65338;|&#377;|&#7824;|&#379;|&#381;|&#7826;|&#7828;|&#437;|&#548;|&#11391;|&#11371;|&#42850;|[\u005A\u24CF\uFF3A\u0179\u1E90\u017B\u017D\u1E92\u1E94\u01B5\u0224\u2C7F\u2C6B\uA762])/g
 },	{
-	'base': "",	//Niqqud in Hebrew
+	'base': "",	//delete Niqqud in Hebrew
 		'letters': /[\u0591-\u05C7]/g
 }]
 
@@ -580,7 +580,6 @@ function removeDiacritics(str) {
 function searchLanguage(firstLetter)
 {
 	codefirstLetter = firstLetter.charCodeAt();
-	console.log(codefirstLetter);
 	var codeLetter = [65,90];
 	if((codefirstLetter>=65) && (codefirstLetter<=90)) { // Latin
 		return codeLetter = [65,90];
@@ -591,7 +590,6 @@ function searchLanguage(firstLetter)
 	if((codefirstLetter>=913) && (codefirstLetter<=937))	{ //Greek Α -> Ω
 		return codeLetter = [913,929]; //930 is blank
 	}
-	//----------No certain-----------------------------------------------------//
 	if((codefirstLetter>=1040) && (codefirstLetter<=1071))	{ //Cyrillic А -> Я
 		return codeLetter = [1040,1071]; //930 is blank
 	}
