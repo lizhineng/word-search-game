@@ -20,7 +20,7 @@
       var gameobj = gameAreaEl.wordSearch();
 
       // Put words into `.ws-words`
-      var words = gameobj.settings.words,
+      var words = gameobj.settings.wordsList,
         wordsWrap = document.querySelector('.ws-words');
       for (i in words) {
         var liEl = document.createElement('li');
